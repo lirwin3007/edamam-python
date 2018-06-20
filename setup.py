@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="edamam-python",
+    name="edamam_api",
     version="0.0.1",
     author="Louis Irwin",
     author_email="coding@louisirwin.co.uk",
