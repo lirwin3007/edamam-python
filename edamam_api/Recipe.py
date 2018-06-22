@@ -4,15 +4,28 @@ appID = None
 appKey = None
 
 class RecipeSearch():
+    """Object to hold a search for a recipe
 
-    def __init__(self, parameters = {}):
+    Args:
+        paramters (Dictionary, optional): Dictionary of search terms to be used.
+        es (bool, optional): Indicated if results should be returned in Spanish. Deafults to False."""
+
+    def __init__(self, parameters = {}, es = False):
         self.parameters = parameters
         self.parameters["app_id"] = appID
         self.parameters["app_key"] = appKey
         self._request = None
+        if not es:
+            self.basePath = "https://api.edamam.com/search"
+        else:
+            self.basePath = "https://test-es.edamam.com/search"
 
     def getResults(self):
-        self._request = requests.get("https://api.edamam.com/search", params=self.parameters)
+        """Get the results of a recipe search
+
+        returns:
+            Recipe[]: List of all Recipes the search returned"""
+        self._request = requests.get(self.basePath, params=self.parameters)
         hits = self._request.json()["hits"]
         result = []
         for hit in hits:
@@ -20,7 +33,7 @@ class RecipeSearch():
         return result
 
 class Recipe():
-
+    
     def __init__(self, source = None):
         if source != None:
             self.uri = source["uri"]
